@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fake Job Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fake Job Detection</h1>
+
+        <button class="toggle-btn" onclick="toggleMode()">Toggle Dark/Light Mode</button>
+
+        <form action="/predict" method="post">
+            <label for="title">Select Job Title:</label>
+            <select name="title" id="title" required>
+                {% for title in titles %}
+                    <option value="{{ title }}">{{ title }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="description">Select Job Description:</label>
+            <select name="description" id="description" required>
+                {% for desc in descriptions %}
+                    <option value="{{ desc }}">{{ desc[:100] }}...</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result">{{ prediction }}</div>
+        {% endif %}
+    </div>
+
+<script>
+    function toggleMode() {
+        document.body.classList.toggle("light-mode");
+    }
+</script>
+
+</body>
+</html>
